@@ -152,7 +152,3 @@ Replace `/dev/sdX` with the actual device identifier for the SD card.
 ## Running on the Raspberry Pi 5
 
 Insert the SD card into the Raspberry Pi 5, power it on, and it will automatically connect to WiFi and enable BCM2835-based sensor integration.
-
----
-
-This setup provides a comprehensive Buildroot environment tailored for the Raspberry Pi 5, complete with automated WiFi connection and sensor support via the BCM2835 library.
