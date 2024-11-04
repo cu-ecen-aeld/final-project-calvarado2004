@@ -1,0 +1,42 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          wifi_startup
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start WiFi on boot
+### END INIT INFO
+
+WPA_CONF="/etc/wpa_supplicant.conf"
+
+case "$1" in
+  start)
+    echo "Starting WiFi..."
+    # Ensure WiFi interface is up
+    ifconfig wlan0 up
+    # Start wpa_supplicant with the specified configuration file
+    wpa_supplicant -B -i wlan0 -c "$WPA_CONF"
+    # Obtain IP via DHCP
+    dhclient wlan0
+    ;;
+  stop)
+    echo "Stopping WiFi..."
+    # Stop wpa_supplicant
+    killall wpa_supplicant
+    # Release DHCP
+    dhclient -r wlan0
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+exit 0
+
