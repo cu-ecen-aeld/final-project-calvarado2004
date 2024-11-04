@@ -16,6 +16,10 @@ case "$1" in
     echo "Starting WiFi..."
     # Ensure WiFi interface is up
 
+    modprobe brcmfmac
+
+    sleep 3
+
     ifconfig wlan0 up
     # Start wpa_supplicant with the specified configuration file
     wpa_supplicant -B -i wlan0 -c "$WPA_CONF"
