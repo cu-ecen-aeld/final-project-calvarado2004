@@ -6,6 +6,11 @@ This project provides a Buildroot-based environment for the Raspberry Pi 5, incl
 
 Carlos Alvarado Martinez
 
+## Wiki Pages
+
+- [Overview](https://github.com/cu-ecen-aeld/final-project-calvarado2004/wiki)
+- [Schedule](https://github.com/cu-ecen-aeld/final-project-calvarado2004/wiki/Schedule)
+
 ## Prerequisites
 
 The following resources are required for this project:
