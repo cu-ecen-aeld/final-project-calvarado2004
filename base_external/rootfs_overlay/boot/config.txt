@@ -1,0 +1,3 @@
+dtparam=i2c_arm=on
+dtoverlay=spi-bcm2835
+
