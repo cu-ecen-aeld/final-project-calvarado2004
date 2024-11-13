@@ -3,3 +3,5 @@ brcmfmac
 # Add BCM2835 modules for I2C and SPI
 i2c_bcm2835
 spi_bcm2835
+i2c_dev
+i2c_bcm2708
