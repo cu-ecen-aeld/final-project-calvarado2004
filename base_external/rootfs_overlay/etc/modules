@@ -1,7 +1,6 @@
 # Add the brcmfmac module for WiFi
 brcmfmac
 # Add BCM2835 modules for I2C and SPI
-i2c_bcm2835
-spi_bcm2835
-i2c_dev
-i2c_bcm2708
+i2c-bcm2835
+spi-bcm2835
+i2c-dev
