@@ -1,0 +1,21 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	fragment@0 {
+		target = <&i2c1>; // Ensure this is the correct I2C bus
+		__overlay__ {
+			status = "okay";
+			clock-frequency = <400000>;
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			bme280@76 {
+				compatible = "bosch,bme280";
+				reg = <0x76>; // I2C address of the BME280 sensor
+				status = "okay";
+			};
+		};
+	};
+};

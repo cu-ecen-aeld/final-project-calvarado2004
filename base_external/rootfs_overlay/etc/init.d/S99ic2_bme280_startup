@@ -1,0 +1,55 @@
+#!/bin/sh
+
+case "$1" in
+  start)
+    echo "Starting BME280 Sensor..."
+
+    modprobe i2c_bcm2835
+    modprobe i2c_dev
+
+    # Check if configfs is already mounted
+    if ! mountpoint -q /config; then
+      mkdir -p /config/device-tree
+      mount -t configfs none /config
+    fi
+
+    # Apply the overlay if not already applied
+    if [ ! -f /config/device-tree/overlays/bme280-overlay.dtbo ]; then
+      dtoverlay /boot/overlays/bme280-overlay.dtbo
+    else
+      echo "Overlay already applied."
+    fi
+
+    i2cdetect -y 1
+
+    ;;
+  stop)
+    echo "Stopping BME280 Sensor..."
+
+    # Remove the device tree overlay
+    if [ -d /config/device-tree/overlays ]; then
+      rm -rf /config/device-tree/overlays/bme280-overlay
+    fi
+
+    # Unmount configfs if mounted
+    if mountpoint -q /config; then
+      umount /config
+    fi
+
+    # Remove modules
+    rmmod i2c_dev
+    rmmod i2c_bcm2835
+
+    ;;
+  restart)
+    $0 stop
+    sleep 3
+    $0 start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+exit 0

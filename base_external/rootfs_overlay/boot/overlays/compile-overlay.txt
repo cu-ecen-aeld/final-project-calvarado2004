@@ -1,2 +1,0 @@
-
-dtc -@ -I dts -O dtb -o bme280-overlay.dtbo bme280-overlay.dts

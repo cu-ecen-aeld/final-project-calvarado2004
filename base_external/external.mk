@@ -1,0 +1,1 @@
+include $(BR2_EXTERNAL_FINAL_PROJECT_BASE_EXTERNAL_PATH)/bme_sensor/bme_sensor.mk

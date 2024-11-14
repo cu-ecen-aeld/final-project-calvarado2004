@@ -1,0 +1,5 @@
+config BR2_PACKAGE_BME_SENSOR
+    bool "bme_sensor"
+    help
+      A program that reads data from the BME-280 sensor.
+        The BME-280 sensor is a temperature, humidity, and pressure sensor.
