@@ -24,7 +24,7 @@ This project uses the following external repositories:
 
 - **BME280 Driver**: Custom kernel space driver that uses I2C headers and IOCTL for communication with the BME280 sensor.
   - Repository: [BME280 Driver](https://github.com/calvarado2004/bme280-driver)
-  - Commit: `40d7e48`
+  - Commit: `cdd16b2`
 - **BME280 Sensor User-Space Program**: User-space program for reading temperature, humidity, and pressure data from the BME280 sensor.
   - Repository: [BME280 Sensor](https://github.com/calvarado2004/bme280-sensor)
   - Commit: `a15648d`
