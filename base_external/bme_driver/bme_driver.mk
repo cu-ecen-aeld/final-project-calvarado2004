@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-BME_DRIVER_VERSION = cdd16b2
+BME_DRIVER_VERSION = 1165a3b
 BME_DRIVER_SITE = https://github.com/calvarado2004/bme280-driver.git
 BME_DRIVER_SITE_METHOD = git
 BME_DRIVER_LICENSE = GPL-2.0
