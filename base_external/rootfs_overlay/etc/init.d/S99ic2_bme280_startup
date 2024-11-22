@@ -4,7 +4,8 @@ case "$1" in
   start)
     echo "Starting BME280 Sensor..."
 
-    modprobe i2c_bcm2835
+    #modprobe i2c_bcm2835
+    modprobe bme_driver
     modprobe i2c_dev
 
     # Check if configfs is already mounted
@@ -20,7 +21,7 @@ case "$1" in
       echo "Overlay already applied."
     fi
 
-    i2cdetect -y 1
+    #i2cdetect -y 1
 
     ;;
   stop)
@@ -38,7 +39,8 @@ case "$1" in
 
     # Remove modules
     rmmod i2c_dev
-    rmmod i2c_bcm2835
+    #rmmod i2c_bcm2835
+    rmmod bme_driver
 
     ;;
   restart)

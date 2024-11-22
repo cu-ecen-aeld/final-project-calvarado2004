@@ -1,6 +1,6 @@
 # Raspberry Pi 5 Buildroot Project
 
-This project provides a Buildroot-based environment for the Raspberry Pi 5, including WiFi support, networking tools, and integration with the BCM2835 library for sensor interaction.
+This project provides a Buildroot-based environment for the Raspberry Pi 5, integrating a custom BME280 sensor driver that uses I2C headers and IOCTL, WiFi support, networking tools, and integration with the BCM2835 library for sensor interaction.
 
 ## Author
 
@@ -17,6 +17,17 @@ The following resources are required for this project:
 - A Raspberry Pi 5
 - Access to the [Buildroot repository, branch `2024.08.x`](https://github.com/buildroot/buildroot/tree/2024.08.x)
 - A Linux-based build environment with Git
+
+## External Repositories
+
+This project uses the following external repositories:
+
+- **BME280 Driver**: Custom kernel space driver that uses I2C headers and IOCTL for communication with the BME280 sensor.
+  - Repository: [BME280 Driver](https://github.com/calvarado2004/bme280-driver)
+  - Commit: `37e88e4`
+- **BME280 Sensor User-Space Program**: User-space program for reading temperature, humidity, and pressure data from the BME280 sensor.
+  - Repository: [BME280 Sensor](https://github.com/calvarado2004/bme280-sensor)
+  - Commit: `00f18aa`
 
 ## Project Setup
 
@@ -38,9 +49,25 @@ Load the Raspberry Pi 5 default configuration:
 make raspberrypi5_defconfig
 ```
 
-This configuration provides a base setup for the Raspberry Pi 5; however, additional configurations are necessary to support WiFi, network tools, and sensor functionality.
+This configuration provides a base setup for the Raspberry Pi 5; additional configurations are necessary to support WiFi, network tools, sensor functionality, and external repositories.
 
-### 3. Enable WiFi Support
+### 3. Integrate the Custom BME280 Driver
+
+Ensure the Buildroot project is configured to build the BME280 driver from the external repository.
+
+- **BME280 Driver Setup**:
+  - Add the `bme_driver` package to your Buildroot setup.
+  - Update `bme_driver.mk` to fetch and build from the external repository using the specific commit.
+
+### 4. Integrate the BME280 User-Space Program
+
+Configure Buildroot to include the user-space program for reading BME280 sensor data.
+
+- **BME280 Sensor Program Setup**:
+  - Add the `bme_sensor` package to your Buildroot setup.
+  - Update `bme_sensor.mk` to point to the GitHub repository and use the specified commit.
+
+### 5. Enable WiFi Support
 
 To enable WiFi, perform the following steps:
 
@@ -62,14 +89,14 @@ To enable WiFi, perform the following steps:
           [*] Enable WPA2
       ```
 
-### 4. Configure DHCP Client
+### 6. Configure DHCP Client
 
 Ensure that `dhclient` is available to obtain an IP address automatically:
 
 1. **Install `dhclient`**:
     - Navigate to `Target packages` > `Networking applications` and enable `dhclient`.
 
-### 5. Set Up the BCM2835 Library for Sensor Integration
+### 7. Set Up the BCM2835 Library for Sensor Integration
 
 The BCM2835 library enables low-level access to the Raspberry Pi’s GPIO pins and hardware features, which is essential for sensor functionality.
 
@@ -87,9 +114,9 @@ The BCM2835 library enables low-level access to the Raspberry Pi’s GPIO pins a
 3. **Add the Library Path**:
     - Ensure that the path to the BCM2835 library is correctly specified in application build scripts to facilitate sensor interaction.
 
-### 6. Automate WiFi Connection on Boot
+### 8. Automate WiFi Connection on Boot
 
-To automate the WiFi startup process, a script named `wifi_startup.sh` can be created. This script should be placed in `base_external/rootfs_overlay/etc/init.d/` in the Buildroot overlay.
+Create a script named `wifi_startup.sh` to automate the WiFi startup process. Place it in `base_external/rootfs_overlay/etc/init.d/`.
 
 ```bash
 WPA_CONF="/etc/wpa_supplicant.conf"
@@ -97,18 +124,13 @@ WPA_CONF="/etc/wpa_supplicant.conf"
 case "$1" in
   start)
     echo "Starting WiFi..."
-    # Ensure WiFi interface is up
     ifconfig wlan0 up
-    # Start wpa_supplicant with the specified configuration file
     wpa_supplicant -B -i wlan0 -c "$WPA_CONF"
-    # Obtain IP via DHCP
     dhclient wlan0
     ;;
   stop)
     echo "Stopping WiFi..."
-    # Stop wpa_supplicant
     killall wpa_supplicant
-    # Release DHCP
     dhclient -r wlan0
     ;;
   restart)
@@ -127,15 +149,15 @@ exit 0
 
 - Place this file in `base_external/rootfs_overlay/etc/init.d/S99wifi_startup`.
 
-### 7. Exclude WiFi Credentials from Version Control
+### 9. Exclude WiFi Credentials from Version Control
 
-To prevent committing WiFi credentials, add `wpa_supplicant.conf` to `.gitignore`:
+Add `wpa_supplicant.conf` to `.gitignore` to prevent committing sensitive credentials:
 
 ```plaintext
 base_external/rootfs_overlay/etc/wpa_supplicant.conf
 ```
 
-### 8. Build the Project
+### 10. Build the Project
 
 Once all configurations are complete, build the project:
 
@@ -156,4 +178,4 @@ Replace `/dev/sdX` with the actual device identifier for the SD card.
 
 ## Running on the Raspberry Pi 5
 
-Insert the SD card into the Raspberry Pi 5, power it on, and it will automatically connect to WiFi and enable BCM2835-based sensor integration.
+Insert the SD card into the Raspberry Pi 5, power it on, and it will automatically connect to WiFi and enable BCM2835-based sensor interaction, leveraging the custom BME280 kernel driver and user-space program.

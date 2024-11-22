@@ -1,1 +1,2 @@
 include $(BR2_EXTERNAL_FINAL_PROJECT_BASE_EXTERNAL_PATH)/bme_sensor/bme_sensor.mk
+include $(BR2_EXTERNAL_FINAL_PROJECT_BASE_EXTERNAL_PATH)/bme_driver/bme_driver.mk

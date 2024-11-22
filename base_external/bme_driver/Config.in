@@ -1,0 +1,4 @@
+config BR2_PACKAGE_BME_DRIVER
+    bool "bme_driver"
+    help
+      BME Driver, a driver for the BME-280 sensor.
