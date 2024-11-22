@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-BME_SENSOR_VERSION = 3daa0ee
+BME_SENSOR_VERSION = 00f18aa
 BME_SENSOR_SITE = https://github.com/calvarado2004/bme280-sensor.git
 BME_SENSOR_SITE_METHOD = git
 
