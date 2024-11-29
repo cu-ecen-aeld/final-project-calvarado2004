@@ -4,13 +4,13 @@
 #
 ################################################################################
 
-BME_SENSOR_VERSION = 00f18aa
+BME_SENSOR_VERSION = f074d17
 BME_SENSOR_SITE = https://github.com/calvarado2004/bme280-sensor.git
 BME_SENSOR_SITE_METHOD = git
 
 # Build using the Makefile
 define BME_SENSOR_BUILD_CMDS
-	$(MAKE) -C $(BUILD_DIR)/bme_sensor-$(BME_SENSOR_VERSION) CC=$(TARGET_CC) CFLAGS="$(TARGET_CFLAGS)" LDFLAGS="$(TARGET_LDFLAGS)"
+	$(MAKE) -C $(BUILD_DIR)/bme_sensor-$(BME_SENSOR_VERSION) CC=$(TARGET_CC) CFLAGS="$(TARGET_CFLAGS)" LDFLAGS="$(TARGET_LDFLAGS) -lmicrohttpd"
 endef
 
 define BME_SENSOR_INSTALL_TARGET_CMDS
