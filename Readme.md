@@ -27,7 +27,7 @@ This project uses the following external repositories:
   - Commit: `37e88e4`
 - **BME280 Sensor User-Space Program**: User-space program for reading temperature, humidity, and pressure data from the BME280 sensor.
   - Repository: [BME280 Sensor](https://github.com/calvarado2004/bme280-sensor)
-  - Commit: `00f18aa`
+  - Commit: `f074d17`
 
 ## Project Setup
 
